@@ -19,7 +19,7 @@ func NewConnection(host string) (conn *DBConnection) {
 	return conn
 }
 
-func (conn *DBConnection) Use(dbName, tableName string) (db *mgo.Collection) {
+func (conn *DBConnection) Use(dbName, tableName string) (collection *mgo.Collection) {
 	return conn.session.DB(dbName).C(tableName)
 }
 
