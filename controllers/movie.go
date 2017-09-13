@@ -39,6 +39,26 @@ func (user *UserController) Get(c *gin.Context) {
 	}
 }
 
+func (user *UserController) Find(c *gin.Context) {
+	var skip, limit int
+	skipV := c.Param("skip")
+	limitV := c.Param("limit")
+	if len(skipV) == 0 {
+		skip = 0
+	}
+	if len(limitV) == 0 {
+		limit = 10
+	}
+
+	list, err := movieModel.Find(skip, limit)
+	if err != nil {
+		c.JSON(404, gin.H{"message": "Find Error", "error": err.Error()})
+		c.Abort()
+	} else {
+		c.JSON(200, gin.H{"data": list})
+	}
+}
+
 func (user *UserController) Update(c *gin.Context) {
 	id := c.Param("id")
 	data := forms.UpdateMovieCommand{}

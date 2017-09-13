@@ -3,6 +3,7 @@ package models
 import (
 	"github.com/Luncher/go-rest/db"
 	"github.com/Luncher/go-rest/forms"
+	"gopkg.in/mgo.v2/bson"
 )
 
 type Movie struct {
@@ -25,6 +26,12 @@ func (m *MovieModel) Get(id string) (movie Movie, err error) {
 	collection := dbConnect.Use("test-mgo", "movies")
 	err = collection.FindId(id).One(&movie)
 	return movie, err
+}
+
+func (m *MovieModel) Find(skip, limit int) (list []Movie, err error) {
+	collection := dbConnect.Use("test-mgo", "movies")
+	err = collection.Find(bson.M{}).All(&list)
+	return list, err
 }
 
 func (m *MovieModel) Update(id string, data forms.UpdateMovieCommand) (err error) {

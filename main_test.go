@@ -30,7 +30,7 @@ func SetupRouter() *gin.Engine {
 	}
 
 	router.NoRoute(func(c *gin.Context) {
-		c.String(http.NotFound, "Not Found")
+		c.String(http.StatusNotFound, "Not Found")
 	})
 
 	return router
@@ -39,14 +39,14 @@ func SetupRouter() *gin.Engine {
 func TestCreateMovie(t *testing.T) {
 	testRouter := SetupRouter()
 
-	movie := forms.CreateMovieCommand
+	movie := forms.CreateMovieCommand{}
 	movie.Name = "foobar"
 	movie.Desc = "the foobar movie"
 	movie.Rating = 6
 
 	body, _ := json.Marshal(movie)
 	buf := bytes.NewBuffer(body)
-	req, err := http.NewRequest("POST", "/movies", buf)
+	req, err := http.NewRequest("POST", "/v1/movies", buf)
 	req.Header.Set("Content-Type", "application/json")
 	if err != nil {
 		t.Fatal(err)
@@ -57,4 +57,9 @@ func TestCreateMovie(t *testing.T) {
 	if resp.Code != 200 {
 		t.Fatal("Invalid Request")
 	}
+}
+
+func TestGetMovie(t *testing.T) {
+	testRouter := SetupRouter()
+
 }
