@@ -19,7 +19,7 @@ func (user *UserController) Create(c *gin.Context) {
 		return
 	}
 
-	movieId, err := movieModel.Ceate(data)
+	movieId, err := movieModel.Create(data)
 	if err != nil {
 		c.JSON(406, gin.H{"message": "Movie could not be created", "error": err.Error()})
 		c.Abort()
@@ -34,7 +34,7 @@ func (user *UserController) Get(c *gin.Context) {
 	if id, err := strconv.ParseInt(id, 10, 64); err != nil {
 		c.JSON(404, gin.H{"message": "Invalid parameter"})
 	} else {
-		profile, err := movieModel.findOne(id)
+		profile, err := movieModel.Get(id)
 		if err != nil {
 			c.JSON(404, gin.H{"message": "Movie not found", "error": err.Error()})
 			c.Abort()
