@@ -60,7 +60,7 @@ func (user *UserController) Find(c *gin.Context) {
 		limit = 10
 	}
 
-	list, err := movieModel.Find((int)skip, (int)limit)
+	list, err := movieModel.Find(int(skip), int(limit))
 	if err != nil {
 		c.JSON(404, gin.H{"message": "Find Error", "error": err.Error()})
 		c.Abort()
