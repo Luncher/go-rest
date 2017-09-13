@@ -46,37 +46,30 @@ func (user *UserController) Get(c *gin.Context) {
 
 func (user *UserController) Update(c *gin.Context) {
 	id := c.Param("id")
-	if id, err := strconv.ParseInt(id, 10, 64); err == nil {
-		var data = forms.UpdateMovieCommand
-		if c.BindJSON(&data) != nil {
-			c.JSON(406, gin.H{"message": "Invalid Parameters"})
-			c.Abort()
-			return
-		}
+	data := forms.UpdateMovieCommand{}
 
-		err := movieModel.Update(id, data)
-		if err != nil {
-			c.JSON(406, gin.H{"message": "movie count not be updated", "error": err.Error()})
-			c.Abort()
-			return
-		}
-		c.JSON(200, gin.H{"message": "Movie updated"})
-	} else {
-		c.JSON(404, gin.H{"message": "Invalid parameter", "error": err.Error()})
+	if c.BindJSON(&data) != nil {
+		c.JSON(406, gin.H{"message": "Invalid Parameters"})
+		c.Abort()
+		return
 	}
+
+	err := movieModel.Update(id, data)
+	if err != nil {
+		c.JSON(406, gin.H{"message": "movie count not be updated", "error": err.Error()})
+		c.Abort()
+		return
+	}
+	c.JSON(200, gin.H{"message": "Movie updated"})
 }
 
 func (user *UserController) Delete(c *gin.Context) {
 	id := c.Param("id")
-	if id, err := strconv.ParseInt(id, 10, 64); err != nil {
-		err := movieModel.Delete(id)
-		if err != nil {
-			c.JSON(406, gin.H{"message": "Movie could not be deleted", "error": err.Error()})
-			c.Abort()
-			return
-		}
-		c.JSON(200, gin.H{"message": "Movie deleted"})
-	} else {
-		c.JSON(404, gin.H{"message": "Invalid Parameter"})
+	err := movieModel.Delete(id)
+	if err != nil {
+		c.JSON(406, gin.H{"message": "Movie could not be deleted", "error": err.Error()})
+		c.Abort()
+		return
 	}
+	c.JSON(200, gin.H{"message": "Movie deleted"})
 }

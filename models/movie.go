@@ -15,26 +15,26 @@ type MovieModel struct{}
 
 var dbConnect = db.NewConnection("localhost")
 
-func (m MovieModel) Create(data forms.CreateMovieCommand) error {
+func (m *MovieModel) Create(data forms.CreateMovieCommand) error {
 	collection := dbConnect.Use("test-mgo", "movies")
 	err := collection.Insert(&Movie{data.Name, data.Rating, data.Desc})
 	return err
 }
 
-func (m MovieModel) Get(id string) (movie Movie, err error) {
+func (m *MovieModel) Get(id string) (movie Movie, err error) {
 	collection := dbConnect.Use("test-mgo", "movies")
 	err = collection.FindId(id).One(&movie)
 	return movie, err
 }
 
-func (m MovieModel) Update(id string, data forms.UpdateMovieCommand) (err error) {
+func (m *MovieModel) Update(id string, data forms.UpdateMovieCommand) (err error) {
 	collection := dbConnect.Use("test-mgo", "movies")
 	err = collection.UpdateId(id, data)
 
 	return err
 }
 
-func (m MovieModel) Delete(id string) (err error) {
+func (m *MovieModel) Delete(id string) (err error) {
 	collection := dbConnect.Use("test-mgo", "movies")
 	err = collection.RemoveId(id)
 
