@@ -21,4 +21,6 @@ func main() {
 	router.NoRoute(func(c *gin.Context) {
 		c.String(http.NotFound, "Not Found")
 	})
+
+	router.Run()
 }

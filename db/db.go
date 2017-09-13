@@ -1,6 +1,7 @@
 package db
 
 import (
+	"fmt"
 	"gopkg.in/mgo.v2"
 )
 
@@ -8,15 +9,16 @@ type DBConnection struct {
 	session *mgo.Session
 }
 
-func NewConnection(host string) (conn *DBConnection, err error) {
+func NewConnection(host string) (conn *DBConnection) {
 	session, err := mgo.Dial(host)
 	if err != nil {
-		return nil, err
+		fmt.Println(err)
+		panic(err)
 	}
 	session.SetMode(mgo.Monotonic, true)
 	conn = &DBConnection{session}
 
-	return conn, nil
+	return conn
 }
 
 func (conn *DBConnection) Use(dbName, tableName string) (db *mgo.Collection) {

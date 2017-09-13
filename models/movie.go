@@ -1,10 +1,8 @@
 package models
 
 import (
-	"errors"
 	"github.com/Luncher/go-rest/db"
 	"github.com/Luncher/go-rest/forms"
-	"time"
 )
 
 type Movie struct {
@@ -15,15 +13,12 @@ type Movie struct {
 
 type MovieModel struct{}
 
-var dbConnect = db.NewConnection("localhost")
+var dbConnect, _ = db.NewConnection("localhost")
 
 func (m MovieModel) Create(data forms.CreateMovieCommand) (err error) {
 	collection := dbConnect.Use("test-mgo", "movies")
-	err = collection.Insert(&Movie{
-		Name: data.Name,
-		Desc: data.Desc,
-		Rating: data.Rating
-	})
+	movie := Movie{data.Name, data.Rating, data.Desc}
+	err = collection.Insert(&movie)
 
 	return err
 }
@@ -44,7 +39,7 @@ func (m MovieModel) Update(id string, data forms.UpdateMovieCommand) (err error)
 
 func (m MovieModel) Delete(id string) (err error) {
 	collection := dbConnect.Use("test-mgo", "movies")
-	err = collection.RemoveId(id)	
+	err = collection.RemoveId(id)
 
 	return err
 }
