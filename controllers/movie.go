@@ -4,7 +4,6 @@ import (
 	"github.com/Luncher/go-rest/forms"
 	"github.com/Luncher/go-rest/models"
 	"github.com/gin-gonic/gin"
-	"strconv"
 )
 
 var movieModel = new(models.MovieModel)
