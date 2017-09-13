@@ -19,7 +19,7 @@ var dbConnect = db.NewConnection("localhost")
 
 func (m *MovieModel) Create(data forms.CreateMovieCommand) error {
 	collection := dbConnect.Use("test-mgo", "movies")
-	err := collection.Insert(&Movie{data.Name, data.Rating, data.Desc})
+	err := collection.Insert(&Movie{Name: data.Name, Rating: data.Rating, Desc: data.Desc})
 	return err
 }
 
