@@ -59,10 +59,6 @@ func (user *UserController) Update(c *gin.Context) {
 		c.Abort()
 		return
 	}
-	fmt.Println(id)
-	fmt.Println(id)
-	fmt.Println(id)
-	fmt.Println(data)
 	err := movieModel.Update(id, data)
 	if err != nil {
 		c.JSON(406, gin.H{"message": "movie count not be updated", "error": err.Error()})

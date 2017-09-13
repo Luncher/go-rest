@@ -95,9 +95,22 @@ func TestUpdateMovie(t *testing.T) {
 	data := forms.UpdateMovieCommand{Name: "titanic", Rating: 10, Desc: "hello"}
 	body, _ := json.Marshal(data)
 	buf := bytes.NewBuffer(body)
-	uri := fmt.Sprintf("/v1/movies/%s", "59b8e1f73d27fe6828a82bf3")
-	fmt.Println(uri)
+	uri := fmt.Sprintf("/v1/movies/%s", movieId)
 	req, err := http.NewRequest("PUT", uri, buf)
+	if err != nil {
+		t.Fatal(err)
+	}
+	resp := httptest.NewRecorder()
+	testRouter.ServeHTTP(resp, req)
+	if resp.Code != 200 {
+		t.Fatal("Invalid Request", resp.Code, resp.Body.String())
+	}
+}
+
+func TestGetMovie(t *testing.T) {
+	testRouter := SetupRouter()
+	uri := fmt.Sprintf("/v1/movies/%s", "59b8e1f73d27fe6828a82bf3")
+	req, err := http.NewRequest("GET", uri, nil)
 	if err != nil {
 		t.Fatal(err)
 	}

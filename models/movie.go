@@ -25,7 +25,7 @@ func (m *MovieModel) Create(data forms.CreateMovieCommand) error {
 
 func (m *MovieModel) Get(id string) (movie Movie, err error) {
 	collection := dbConnect.Use("test-mgo", "movies")
-	err = collection.FindId(id).One(&movie)
+	err = collection.FindId(bson.ObjectIdHex(id)).One(&movie)
 	return movie, err
 }
 
