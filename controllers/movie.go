@@ -4,6 +4,7 @@ import (
 	"github.com/Luncher/go-rest/forms"
 	"github.com/Luncher/go-rest/models"
 	"github.com/gin-gonic/gin"
+	"strconv"
 )
 
 var movieModel = new(models.MovieModel)
@@ -41,12 +42,19 @@ func (user *UserController) Get(c *gin.Context) {
 
 func (user *UserController) Find(c *gin.Context) {
 	var skip, limit int
-	skipV := c.Param("skip")
-	limitV := c.Param("limit")
-	if len(skipV) == 0 {
-		skip = 0
+	if skip, err := strconv.ParseInt(c.Param("skip"), 10, 64); err != nil {
+		c.JSON(404, gin.H{"message": "invalid parameter"})
+		c.Abort()
+		return
 	}
-	if len(limitV) == 0 {
+
+	if limit, err := strconv.ParseInt(c.Param("limit"), 10, 64); err != nil {
+		c.JSON(404, gin.H{"message": "invalid parameter"})
+		c.Abort()
+		return
+	}
+
+	if limit == 0 {
 		limit = 10
 	}
 
