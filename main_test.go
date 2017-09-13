@@ -13,13 +13,6 @@ import (
 	"testing"
 )
 
-type Movie struct {
-	id     string
-	Name   string
-	Desc   string
-	Rating float32
-}
-
 func SetupRouter() *gin.Engine {
 	router := gin.Default()
 
@@ -64,7 +57,9 @@ func TestCreateMovie(t *testing.T) {
 	}
 }
 
-var movieId string
+var (
+	movieId string
+)
 
 func TestFindAllMovie(t *testing.T) {
 	testRouter := SetupRouter()
