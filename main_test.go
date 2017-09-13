@@ -14,6 +14,7 @@ import (
 )
 
 type Movie struct {
+	id     string
 	Name   string
 	Desc   string
 	Rating float32
@@ -63,6 +64,8 @@ func TestCreateMovie(t *testing.T) {
 	}
 }
 
+var movieId string
+
 func TestFindAllMovie(t *testing.T) {
 	testRouter := SetupRouter()
 	req, err := http.NewRequest("GET", "/v1/movies", nil)
@@ -71,13 +74,35 @@ func TestFindAllMovie(t *testing.T) {
 	}
 	resp := httptest.NewRecorder()
 	testRouter.ServeHTTP(resp, req)
-	fmt.Println(resp.Body.String())
 	buf, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		t.Fatal(err)
 	}
-	var result interface{}
+	result := struct {
+		Data []struct {
+			Id string `json:"id"`
+		}
+	}{}
 	json.Unmarshal(buf, &result)
+	movieId = result.Data[0].Id
+	if resp.Code != 200 {
+		t.Fatal("Invalid Request", resp.Code, resp.Body.String())
+	}
+}
+
+func TestUpdateMovie(t *testing.T) {
+	testRouter := SetupRouter()
+	data := forms.UpdateMovieCommand{Name: "titanic", Rating: 10, Desc: "hello"}
+	body, _ := json.Marshal(data)
+	buf := bytes.NewBuffer(body)
+	uri := fmt.Sprintf("/v1/movies/%s", "59b8e1f73d27fe6828a82bf3")
+	fmt.Println(uri)
+	req, err := http.NewRequest("PUT", uri, buf)
+	if err != nil {
+		t.Fatal(err)
+	}
+	resp := httptest.NewRecorder()
+	testRouter.ServeHTTP(resp, req)
 	if resp.Code != 200 {
 		t.Fatal("Invalid Request", resp.Code, resp.Body.String())
 	}
