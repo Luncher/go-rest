@@ -41,14 +41,16 @@ func (user *UserController) Get(c *gin.Context) {
 }
 
 func (user *UserController) Find(c *gin.Context) {
-	var skip, limit int
-	if skip, err := strconv.ParseInt(c.Param("skip"), 10, 64); err != nil {
+	var err error
+	var skip, limit int64
+
+	if skip, err = strconv.ParseInt(c.Param("skip"), 10, 64); err != nil {
 		c.JSON(404, gin.H{"message": "invalid parameter"})
 		c.Abort()
 		return
 	}
 
-	if limit, err := strconv.ParseInt(c.Param("limit"), 10, 64); err != nil {
+	if limit, err = strconv.ParseInt(c.Param("limit"), 10, 64); err != nil {
 		c.JSON(404, gin.H{"message": "invalid parameter"})
 		c.Abort()
 		return
@@ -58,7 +60,7 @@ func (user *UserController) Find(c *gin.Context) {
 		limit = 10
 	}
 
-	list, err := movieModel.Find(skip, limit)
+	list, err := movieModel.Find((int)skip, (int)limit)
 	if err != nil {
 		c.JSON(404, gin.H{"message": "Find Error", "error": err.Error()})
 		c.Abort()
