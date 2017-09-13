@@ -7,6 +7,7 @@ import (
 )
 
 type Movie struct {
+	ID     bson.ObjectId
 	Name   string
 	Rating float32
 	Desc   string

@@ -3,9 +3,11 @@ package main
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"github.com/Luncher/go-rest/controllers"
 	"github.com/Luncher/go-rest/forms"
 	"github.com/gin-gonic/gin"
+	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -68,6 +70,13 @@ func TestFindAllMovie(t *testing.T) {
 	}
 	resp := httptest.NewRecorder()
 	testRouter.ServeHTTP(resp, req)
+	fmt.Println(resp.Body.String())
+	buf, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var result interface{}
+	json.Unmarshal(buf, &result)
 	if resp.Code != 200 {
 		t.Fatal("Invalid Request", resp.Code, resp.Body.String())
 	}
