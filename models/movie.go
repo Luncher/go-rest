@@ -13,7 +13,7 @@ type Movie struct {
 
 type MovieModel struct{}
 
-var dbConnect, _ = db.NewConnection("localhost")
+var dbConnect = db.NewConnection("localhost")
 
 func (m MovieModel) Create(data forms.CreateMovieCommand) error {
 	collection := dbConnect.Use("test-mgo", "movies")
@@ -21,12 +21,11 @@ func (m MovieModel) Create(data forms.CreateMovieCommand) error {
 	return err
 }
 
-// func (m MovieModel) Get(id string) (movie Movie, err error) {
-// 	collection := dbConnect.Use("test-mgo", "movies")
-// 	err = collection.FindId(id).One(&movie)
-
-// 	return movie, err
-// }
+func (m MovieModel) Get(id string) (movie Movie, err error) {
+	collection := dbConnect.Use("test-mgo", "movies")
+	err = collection.FindId(id).One(&movie)
+	return movie, err
+}
 
 func (m MovieModel) Update(id string, data forms.UpdateMovieCommand) (err error) {
 	collection := dbConnect.Use("test-mgo", "movies")
