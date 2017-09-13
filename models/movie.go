@@ -7,10 +7,10 @@ import (
 )
 
 type Movie struct {
-	ID     bson.ObjectId
-	Name   string
-	Rating float32
-	Desc   string
+	Id     bson.ObjectId `json:"id"		bson:"_id,omiempty"`
+	Name   string        `json:name`
+	Rating float32       `json:rating`
+	Desc   string        `json:desc`
 }
 
 type MovieModel struct{}

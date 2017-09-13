@@ -57,6 +57,7 @@ func TestCreateMovie(t *testing.T) {
 
 	resp := httptest.NewRecorder()
 	testRouter.ServeHTTP(resp, req)
+	fmt.Println(resp.Body.String())
 	if resp.Code != 200 {
 		t.Fatal("Invalid Request")
 	}
