@@ -1,5 +1,4 @@
 ```shell
-.
 ├── LICENSE
 ├── README.md
 ├── controllers
@@ -8,6 +7,7 @@
 │   └── db.go
 ├── forms
 │   └── movie.go
+├── glide.yaml
 ├── main.go
 ├── main_test.go
 └── models
