@@ -15,11 +15,9 @@ type MovieModel struct{}
 
 var dbConnect, _ = db.NewConnection("localhost")
 
-func (m MovieModel) Create(data forms.CreateMovieCommand) (err error) {
+func (m MovieModel) Create(data forms.CreateMovieCommand) error {
 	collection := dbConnect.Use("test-mgo", "movies")
-	movie := Movie{data.Name, data.Rating, data.Desc}
-	err = collection.Insert(&movie)
-
+	err := collection.Insert(&Movie{data.Name, data.Rating, data.Desc})
 	return err
 }
 
