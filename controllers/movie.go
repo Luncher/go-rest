@@ -14,7 +14,7 @@ type UserController struct{}
 func (user *UserController) Create(c *gin.Context) {
 	var data forms.CreateMovieCommand
 	if c.BindJSON(&data) != nil {
-		c.JSON(406, gin.H{"message": "Invalid form", "form": createCommand})
+		c.JSON(406, gin.H{"message": "Invalid form", "form": data})
 		c.Abort()
 		return
 	}
