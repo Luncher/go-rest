@@ -28,7 +28,7 @@ func (m *MovieModel) Get(id string) (movie Movie, err error) {
 	return movie, err
 }
 
-func (m *MovieModel) Find(skip, limit int) (list []Movie, err error) {
+func (m *MovieModel) Find() (list []Movie, err error) {
 	collection := dbConnect.Use("test-mgo", "movies")
 	err = collection.Find(bson.M{}).All(&list)
 	return list, err
