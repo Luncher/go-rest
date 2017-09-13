@@ -25,6 +25,7 @@ func SetupRouter() *gin.Engine {
 		movie := new(controllers.UserController)
 		v1.POST("/movies", movie.Create)
 		v1.GET("/movies/:id", movie.Get)
+		v1.GET("/movies", movie.Find)
 		v1.PUT("/movies/:id", movie.Update)
 		v1.DELETE("/movies/:id", movie.Delete)
 	}
@@ -59,7 +60,15 @@ func TestCreateMovie(t *testing.T) {
 	}
 }
 
-func TestGetMovie(t *testing.T) {
+func TestFindAllMovie(t *testing.T) {
 	testRouter := SetupRouter()
-
+	req, err := http.NewRequest("GET", "/v1/movies", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	resp := httptest.NewRecorder()
+	testRouter.ServeHTTP(resp, req)
+	if resp.Code != 200 {
+		t.Fatal("Invalid Request", resp.Code, resp.Body.String())
+	}
 }
