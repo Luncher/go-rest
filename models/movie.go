@@ -37,7 +37,7 @@ func (m *MovieModel) Find() (list []Movie, err error) {
 
 func (m *MovieModel) Update(id string, data forms.UpdateMovieCommand) (err error) {
 	collection := dbConnect.Use("test-mgo", "movies")
-	err = collection.UpdateId(id, data)
+	err = collection.UpdateId(bson.ObjectIdHex(id), data)
 
 	return err
 }
