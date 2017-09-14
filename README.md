@@ -1,3 +1,7 @@
+Go-REST
+===
+[![Build Status](https://travis-ci.org/Luncher/go-rest.svg?branch=master)](https://travis-ci.org/Luncher/go-rest)
+
 ```shell
 ├── LICENSE
 ├── README.md
