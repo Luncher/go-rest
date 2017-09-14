@@ -1,6 +1,7 @@
 Go-REST
 ===
-[![Build Status](https://travis-ci.org/Luncher/go-rest.svg?branch=master)](https://travis-ci.org/Luncher/go-rest)
+[![Build Status](https://travis-ci.org/Luncher/go-rest.svg?branch=master)](https://travis-ci.org/Luncher/go-rest)  
+[![GoDoc](https://godoc.org/github.com/Luncher/go-rest?status.svg)](https://godoc.org/github.com/Luncher/go-rest)
 
 ```shell
 ├── LICENSE
